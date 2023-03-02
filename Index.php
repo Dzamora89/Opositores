@@ -1,5 +1,8 @@
 <?php
+include './Include/BD.php';
+$opositores = BD::getAllOpositores();
 ?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,8 +11,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Opositores</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
 </head>
 <body>
-<h1>HOla</h1>
+
 </body>
 </html>
