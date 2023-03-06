@@ -7,7 +7,7 @@ class BD
 
 
 /*
- * Funcion para Realizar Conexion
+ * Función para Realizar Connexion
  */
 
     public static function realizarConexion(){
@@ -135,28 +135,38 @@ class BD
      * Funcion de insercion de datos a la tabla
      * Vamos a hacerla con Codigo, si fuera incremental no seria necesario
      */
-    public static function insertarOpositor($dniopo, $nomopo, $ciuopo, $cpopo, $tfalu, $tribunalOpo): string
+    public static function insertarOpositor($dniopo, $nomopo, $ciuopo, $cpopo, $tfalu, $tribunalOpo): ?string
     {
-        $sql = "INSERT INTO oposiciones.opositores values (
+        try {
+            $sql = "INSERT INTO oposiciones.opositores values (
         :dniopo, :nomopo, :ciuopo, :cpopo, :tfalu, :tribunalopo
         )";
-        $conexion = BD::realizarConexion();
-        $resultado = $conexion->prepare($sql);
-        $resultado->bindParam(':dniopo', $dniopo);
-        $resultado->bindParam(':nomopo', $nomopo);
-        $resultado->bindParam(':ciuopo', $ciuopo);
-        $resultado->bindParam(':cpopo', $cpopo);
-        $resultado->bindParam(':tfalu', $tfalu);
-        $resultado->bindParam(':tribunalopo', $tribunalOpo);
-        $resultado->execute();
-        $afectados = $resultado->rowCount();
-        $conexion = null;
-        $resultado->closeCursor();
-        if ($afectados == 1) {
-            return "Modificacion realizada";
-        }else {
-            return "Modificacion Fallida";
+            $conexion = BD::realizarConexion();
+            $resultado = $conexion->prepare($sql);
+            $resultado->bindParam(':dniopo', $dniopo);
+            $resultado->bindParam(':nomopo', $nomopo);
+            $resultado->bindParam(':ciuopo', $ciuopo);
+            $resultado->bindParam(':cpopo', $cpopo);
+            $resultado->bindParam(':tfalu', $tfalu);
+            $resultado->bindParam(':tribunalopo', $tribunalOpo);
+            $resultado->execute();
+            $afectados = $resultado->rowCount();
+            $conexion = null;
+            $resultado->closeCursor();
+            if ($afectados == 1) {
+                return "Modificacion realizada";
+            }else {
+                return "Modificacion Fallida";
+            }
+        }catch (Exception $e)
+        {
+            /*
+            * Si la funciona da error retornara Null;
+            */
+            echo "Error al realizar la conexión: " . $e->getMessage();
+            return null;
         }
+
     }
 
     /*
@@ -164,27 +174,36 @@ class BD
      */
 
     public static function actualizarOpositor($dniopo,$nomopo, $ciuopo,$cpopo, $tfalu, $tribunalopo){
-        $sql = "UPDATE oposiciones.opositores set NOMOPO = :nomopo , CIUOPO = :ciuopo,
+        try {
+            $sql = "UPDATE oposiciones.opositores set NOMOPO = :nomopo , CIUOPO = :ciuopo,
                 TFALU = :tfalu, TRIBUNALOPO= :tribunalopo, CPOPO = :cpopo
                 where DNIOPO = :dniopo";
 
-        $conexion = BD::realizarConexion();
-        $resultado = $conexion->prepare($sql);
-        $resultado->bindParam(':dniopo', $dniopo);
-        $resultado->bindParam(':nomopo', $nomopo);
-        $resultado->bindParam(':ciuopo', $ciuopo);
-        $resultado->bindParam(':cpopo', $cpopo);
-        $resultado->bindParam(':tfalu', $tfalu);
-        $resultado->bindParam(':tribunalopo', $tribunalopo);
-        $resultado->execute();
-        $afectados = $resultado->rowCount();
-        $conexion = null;
-        $resultado->closeCursor();
-        if ($afectados == 1) {
-            return "Modificacion realizada";
-        }else {
-            return "Modificacion Fallida";
+            $conexion = BD::realizarConexion();
+            $resultado = $conexion->prepare($sql);
+            $resultado->bindParam(':dniopo', $dniopo);
+            $resultado->bindParam(':nomopo', $nomopo);
+            $resultado->bindParam(':ciuopo', $ciuopo);
+            $resultado->bindParam(':cpopo', $cpopo);
+            $resultado->bindParam(':tfalu', $tfalu);
+            $resultado->bindParam(':tribunalopo', $tribunalopo);
+            $resultado->execute();
+            $afectados = $resultado->rowCount();
+            $conexion = null;
+            $resultado->closeCursor();
+            if ($afectados == 1) {
+                return "Modificacion realizada";
+            }else {
+                return "Modificacion Fallida";
+            }
+        }catch (Exception $e){
+            /*
+            * Si la funciona da error retornara Null;
+            */
+            echo "Error al realizar la conexión: " . $e->getMessage();
+            return null;
         }
+
     }
 
     /*
@@ -217,7 +236,8 @@ class BD
     public static function busquedaOnline($dato){
         $sql = "Select * 
                 From oposiciones.opositores
-                where DNIOPO like :dato or NOMOPO like :dato or CIUOPO like :dato or CPOPO like :dato or TFALU like :dato";
+                where DNIOPO like :dato or NOMOPO like :dato or CIUOPO like :dato
+                   or CPOPO like :dato or TFALU like :dato";
 
         //Aqui tendriamos que añadir manualmente los %dato%
         $datoArreglado = '%'.$dato.'%';

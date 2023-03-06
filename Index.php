@@ -4,6 +4,7 @@ include './Include/BD.php';
 var_dump(BD::busquedaOnline('ALONSO'));
 ?>
 
+
 <!doctype html>
 <html lang="en">
 <head>
