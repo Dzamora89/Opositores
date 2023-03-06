@@ -1,6 +1,7 @@
 <?php
 include './Include/BD.php';
-$opositores = BD::getAllOpositores();
+
+print_r(BD::borrarOpositor('pedro'));
 ?>
 
 <!doctype html>
