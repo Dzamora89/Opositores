@@ -1,7 +1,7 @@
 <?php
 include './Include/BD.php';
 
-print_r(BD::borrarOpositor('pedro'));
+var_dump(BD::busquedaOnline('Alonso'));
 ?>
 
 <!doctype html>

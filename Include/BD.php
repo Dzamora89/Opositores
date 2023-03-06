@@ -207,4 +207,30 @@ class BD
             return "Borrado Fallido";
         }
     }
+
+
+
+    /*
+     * Funcion para realizar la busqueda Online por todos los campos que tenga esa tabla.
+     */
+
+    public static function busquedaOnline($dato){
+        $sql = "Select * 
+                From oposiciones.opositores
+                where DNIOPO like :dato or NOMOPO like :dato or CIUOPO like :dato or CPOPO like :dato or TFALU like :dato";
+
+        //Aqui tendriamos que añadir manualmente los %dato%
+        $datoArreglado = '%'.$dato.'%';
+        $conexion = self::realizarConexion();
+        $resultado = $conexion->prepare($sql);
+        //Vamos a poner ParamSRT para evitar Sustos
+        $resultado->bindParam(':dato',$datoArreglado, PDO::PARAM_STR);
+        $resultado->execute();
+        $arrayOpositores = [];
+        while ($fila = $resultado->fetch(PDO::FETCH_ASSOC)){
+            $arrayOpositores[] = new Opositores($fila);
+        }
+        return $arrayOpositores;
+    }
+
 }
