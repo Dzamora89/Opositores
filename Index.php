@@ -1,7 +1,7 @@
 <?php
 include './Include/BD.php';
 
-var_dump(BD::busquedaOnline('Alonso'));
+var_dump(BD::busquedaOnline('ALONSO'));
 ?>
 
 <!doctype html>
