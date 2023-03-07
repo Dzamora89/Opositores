@@ -1,17 +1,11 @@
 
 
 
-const jsonMandar = {
-	'Valor' : $('#idValor').val(),
-	//...
-	'Valor10' : $('#idValor10').val()
-}
-
 $.ajax({
 	  // La URl del PHP
 		'url': 'destination.php',
 		// El Json para mandarlo al archivo, ya sea en el Post o Get
-		'data': jsonMandar,
+		'data': $('#IDFormulario').serialize(),
 		//De Normal es POST lo ideal, pero se puede poner cualquier http
 		'type': 'post',
 		//Aqui ponemos la respuesta que esperamos del PHP. Json o HTML

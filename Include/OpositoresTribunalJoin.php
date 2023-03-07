@@ -8,7 +8,6 @@ class OpositoresTribunalJoin
     private $cpopo;
     private $tfalu;
     private $tribunalOpo;
-
     private $codigotri;
     private $presidente;
     private $secretario;
